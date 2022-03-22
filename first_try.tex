@@ -24,6 +24,32 @@ $ \sigma^2 = \sum \alpha_i^2 \sigma_i^2$
 
 \end{itemize}
 
-Since we want the mean of the new estimate to remain the same, this is the assumption of unbiased estimator, in the case of two measurements, $\alpha_1$ and $\alpha_2$ should add to $1$, therefore $y = \alpha x_1 + (1-\alpha) x_2$ . The second condition is that we want $\sigma^2$  of $y$ to be as small as possible since it is somehow the error of the derived "measurement" y. Taking derivative of $\sigma^2$ with respect to $\alpha$, equating to zero and verifying that it is indeed a minimum we obtain:
+Since we want the mean of the new estimate to remain the same, this is the assumption of unbiased estimator, in the case of two measurements, $\alpha_1$ and $\alpha_2$ should add to $1$, therefore $y = \alpha x_1 + (1-\alpha) x_2$ . The second condition is that we want $\sigma^2$  of $y$ to be as small as possible since it is somehow the error of the derived "measurement" $y$. Taking derivative of $\sigma^2$ with respect to $\alpha$, equating to zero and verifying that it is indeed a minimum we obtain the desired value of $\alpha$ (the Kalman gain) and expressed the resulting linear combination compactly as:
 
+\[
+y = \dfrac{\nu_1}{\nu_1+\nu_2}x_1 + \dfrac{\nu_2}{\nu_1+\nu_2} x_2
+\]
+
+\[
+\nu = \nu_1 + \nu_2
+\]
+where $\nu_i= 1/\sigma_i^2$ is the precision of each measurement. This makes intuitive sense since the new precision is better (larger is better) than any of the initial measurements.
+
+If there are more than one measuremnts we can treat this as generalizing the procedure above to many variables by taking the sum and using lagrange coefficients for the minimization process or by succesively applying the approach to measuremnts $x_1$ and $x_2$ to produce $x_{12}$, then add $x_{12}$ to $x_3$ and so on. Both procedures yield the same result which is ocnvenient and intriguing since the latest measurement does not seem to have more weight than older measuremnts. Nevertheless the process can be summarized in a more "Kalman" notation.
+
+\[
+x_1 p_1(\mu_1,\sigma_1^2), x_2 p_2(\mu_2,\sigma_2^2)
+\]
+
+\[
+K = \dfrac{\sigma_1^2}{\sigma_1^2+\sigma_2^2} = \dfrac{\nu_1}{\nu_1+\nu_2}
+\]
+
+\[
+y(x_1,x_2) = x_1 + K(x_2-x_1)
+\]
+ 
+\[
+ \sigma_y^2 = (1-K)\sigma_1^2 {\it or} \nu_y = \nu_1 + \nu_2
+\]
 \end{document}
