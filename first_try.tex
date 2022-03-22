@@ -1,0 +1,29 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+Central to the construction of a clock ensemble is the issue of what is the role of Kalman filters. What follows is an intuitive but explicit explanation of how Kalman filters are used to update the state of knowledge of a variable subject to periodic measurements. (Good reference)
+
+I am basically following the reference but tayloring the explanation to the case at hand. The case is build from the simplest case of a scalar variable and then generalizing to a more general case resembling the problem at hand.
+
+Consider a variable $x$ subject to periodic measurements. For the sake of simplicity let's start with the quantity $x$ being measured with devices $1$ and $2$ yielding measurements $x_1$ and $x_2$ each measurement with a normal distribution $N(\mu,\sigma^2)$, assume for now that both devices are unbiased and uncorrelated (to be defined, for now just follow intuitively what this may mean).The problem at hand is given these two measurements what is the proper procedure to derive a better estimate for $x$.
+
+The following result provides insight on how this problem can be tackled:
+
+If $x_i$ are pairwise uncorrelated, unbiased, normally distributed variables ($N(\mu,\sigma^2))$) then a linear combination $\sum \alpha_i x_i$ has the following property:
+
+\begin{itemize}
+\item $y=\sum \alpha_i x_i$ is also normaly distributed with mean $\mu$ and variance $\sigma^2$ expressed as:
+
+$ \mu = \sum \alpha_i \mu_i $
+
+$ \sigma^2 = \sum \alpha_i^2 \sigma_i^2$
+
+\end{itemize}
+
+Since we want the mean of the new estimate to remain the same, this is the assumption of unbiased estimator, in the case of two measurements, $\alpha_1$ and $\alpha_2$ should add to $1$, therefore $y = \alpha x_1 + (1-\alpha) x_2$ . The second condition is that we want $\sigma^2$  of $y$ to be as small as possible since it is somehow the error of the derived "measurement" y. Taking derivative of $\sigma^2$ with respect to $\alpha$, equating to zero and verifying that it is indeed a minimum we obtain:
+
+\end{document}
