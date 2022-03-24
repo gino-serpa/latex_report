@@ -1,10 +1,18 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[12pt,letterpaper]{article}
 \usepackage[utf8]{inputenc}
+
+\newtheorem{theorem}{Theorem}
+
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\title{Summary of work for Dr. Willis}
+
 \begin{document}
 
+\maketitle
+
+\section{Intuition for the role of the Kalmar filter}
 Central to the construction of a clock ensemble is the issue of what is the role of Kalman filters. What follows is an intuitive but explicit explanation of how Kalman filters are used to update the state of knowledge of a variable subject to periodic measurements. (Good reference)
 
 I am basically following the reference but tayloring the explanation to the case at hand. The case is build from the simplest case of a scalar variable and then generalizing to a more general case resembling the problem at hand.
@@ -13,18 +21,16 @@ Consider a variable $x$ subject to periodic measurements. For the sake of simpli
 
 The following result provides insight on how this problem can be tackled:
 
-If $x_i$ are pairwise uncorrelated, unbiased, normally distributed variables ($N(\mu,\sigma^2))$) then a linear combination $\sum \alpha_i x_i$ has the following property:
+\begin{theorem}
+If $x_i$ are pairwise uncorrelated, unbiased, normally distributed variables ($N(\mu,\sigma^2))$) then a linear combination $y = \sum \alpha_i x_i$ is pairwise uncorrelated to the $x_i$'s and normaly distributed with mean $\mu$ and variance $\sigma^2$:
 
-\begin{itemize}
-\item $y=\sum \alpha_i x_i$ is also normaly distributed with mean $\mu$ and variance $\sigma^2$ expressed as:
+\[ \mu = \sum \alpha_i \mu_i \]
+\[ \sigma^2 = \sum \alpha_i^2 \sigma_i^2 \]
 
-$ \mu = \sum \alpha_i \mu_i $
+\end{theorem}
 
-$ \sigma^2 = \sum \alpha_i^2 \sigma_i^2$
 
-\end{itemize}
-
-Since we want the mean of the new estimate to remain the same, this is the assumption of unbiased estimator, in the case of two measurements, $\alpha_1$ and $\alpha_2$ should add to $1$, therefore $y = \alpha x_1 + (1-\alpha) x_2$ . The second condition is that we want $\sigma^2$  of $y$ to be as small as possible since it is somehow the error of the derived "measurement" $y$. Taking derivative of $\sigma^2$ with respect to $\alpha$, equating to zero and verifying that it is indeed a minimum we obtain the desired value of $\alpha$ (the Kalman gain) and expressed the resulting linear combination compactly as:
+Since we want the mean of the new estimate to remain the same (unbiased estimator), in the case of two measurements, $\alpha_1$ and $\alpha_2$ should add to $1$, therefore $y = \alpha x_1 + (1-\alpha) x_2$ . We also want $\sigma^2$ to be as small as possible. Taking derivative of $\sigma^2$ with respect to $\alpha$, equating to zero and verifying that it is indeed a minimum we obtain the desired value of $\alpha$ (the Kalman gain). Defining the precission $\nu_i$ as $\frac{1}{\sigma_i^2}$ (smaller sigma larger precision) and after a bit of manipulatin we obtain:
 
 \[
 y = \dfrac{\nu_1}{\nu_1+\nu_2}x_1 + \dfrac{\nu_2}{\nu_1+\nu_2} x_2
@@ -33,23 +39,29 @@ y = \dfrac{\nu_1}{\nu_1+\nu_2}x_1 + \dfrac{\nu_2}{\nu_1+\nu_2} x_2
 \[
 \nu = \nu_1 + \nu_2
 \]
-where $\nu_i= 1/\sigma_i^2$ is the precision of each measurement. This makes intuitive sense since the new precision is better (larger is better) than any of the initial measurements.
+
+This makes intuitive sense since the new precision is better than any of the initial measurements.
 
 If there are more than one measuremnts we can treat this as generalizing the procedure above to many variables by taking the sum and using lagrange coefficients for the minimization process or by succesively applying the approach to measuremnts $x_1$ and $x_2$ to produce $x_{12}$, then add $x_{12}$ to $x_3$ and so on. Both procedures yield the same result which is ocnvenient and intriguing since the latest measurement does not seem to have more weight than older measuremnts. Nevertheless the process can be summarized in a more "Kalman" notation.
 
-\[
-x_1 p_1(\mu_1,\sigma_1^2), x_2 p_2(\mu_2,\sigma_2^2)
-\]
-
-\[
-K = \dfrac{\sigma_1^2}{\sigma_1^2+\sigma_2^2} = \dfrac{\nu_1}{\nu_1+\nu_2}
-\]
+\begin{theorem} Given two variables $x_1$ and $x_2$ distributed as $p_1(\mu_1,\sigma_1^2)$ and $p_2(\mu_2,\sigma_2^2)$ respectively:
 
 \[
 y(x_1,x_2) = x_1 + K(x_2-x_1)
 \]
+where $K$ the Kalman gain is defined as:
+\[
+K = \dfrac{\sigma_1^2}{\sigma_1^2+\sigma_2^2} = \dfrac{\nu_1}{\nu_1+\nu_2}
+\]
+
+the variance and precision can be expressed as:
  
 \[
- \sigma_y^2 = (1-K)\sigma_1^2 {\it or} \nu_y = \nu_1 + \nu_2
+	\sigma_y^2 = (1-K)\sigma_1^2
 \]
+\[ 
+	\nu_y = \nu_1 + \nu_2
+\]
+\end{theorem}
+
 \end{document}
