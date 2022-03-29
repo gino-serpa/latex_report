@@ -206,9 +206,21 @@ K = \Sigma_1 (\Sigma_1 + \Sigma_2)^{-1} = (N_1 + N_2)^{-1} N_2
 
 where Fig.{\ref{fig:singleparameter}} can similarly illustrate the succesive updating of vector variables.
 
-\section{On the evaluation of noise in measurements}
+\section{On the evaluation of the frequency components of noise in measurements}
 
-Stochatic random noise
+The next point that needed clarification to me was the concept of frequency in the measured noise. I found the following line of thought helpful. Consider a function of time $x_i$ that depends on a certain index $i$. 
+Since it is a function of time we can define the following (assume things converge):
+
+\begin{eqnarray}
+m(x_i)   & = & \lim_{T \to\infty } \dfrac{1}{T} \int_0^T x_i(t) dt,\\
+V^t(x_i) & = & \lim_{T \to\infty } \dfrac{1}{T} \int_0^T
+                  [x_i-m(x_i(t))]^2 dt, \\
+R_i^t(\tau)    & = & \lim_{T \to\infty } \dfrac{1}{T} \int_0^T
+			  [x_i(t)-m(x_i)][x(t+\tau)-m(x_i)] dt
+\end{eqnarray}
+
+The first too are the usual mean $m(x_i)$ and standard deviation $V_t(x_i)$ 
+defined for a time series. The meaning of the last one, the autocorrelation $R_i^t(\tau)$, should become apparent in what follows.
 
 \appendix
 
